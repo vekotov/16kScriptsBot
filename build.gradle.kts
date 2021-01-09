@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.4.10"
+    kotlin("jvm") version "1.4.20"
     id("com.github.johnrengelman.shadow") version "6.1.0"
 }
 
@@ -18,6 +18,7 @@ dependencies {
     implementation("com.petersamokhin.vksdk:core:$vkSdkVersion")
     implementation("com.petersamokhin.vksdk:http-client-jvm-okhttp:$vkSdkVersion")
     implementation("br.com.devsrsouza:redissed:1.1.0")
+    implementation("io.lettuce:lettuce-core:6.0.1.RELEASE")
 }
 
 tasks.shadowJar {
