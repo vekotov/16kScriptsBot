@@ -1,34 +1,43 @@
-import com.charleskorn.kaml.Yaml
-import kotlinx.serialization.Serializable
 import java.io.File
 
 object Settings {
-    @Serializable
-    data class SettingsData(val groupId: Int, val token: String)
+    var token: String? = null
+    var groupID: Int? = null
 
-    val data = loadSettings()
-
-    private fun readSettings(settingsFile: File): SettingsData {
-        return Yaml.default.decodeFromString(SettingsData.serializer(), settingsFile.readText())
+    init {
+        loadSettings()
     }
 
-    private fun writeNewSettings(settingsFile: File): SettingsData {
+    private fun readSettings(settingsFile: File) {
+        val lines = settingsFile.readLines()
+        token = lines[0]
+        groupID = lines[1].toInt()
+    }
+
+    private fun askAndWriteNewSettings(settingsFile: File) {
         print("Enter your group ID: ")
-        val groupId = readLine()!!.toInt()
+        groupID = readLine()!!.toInt()
         print("Enter your token: ")
-        val token = readLine()!!
-        val settings = SettingsData(groupId, token)
+        token = readLine()!!
         settingsFile.createNewFile()
-        settingsFile.writeText(Yaml.default.encodeToString(SettingsData.serializer(), settings))
-        return SettingsData(groupId, token)
+        settingsFile.writeText(
+            """
+            $token
+            $groupID
+        """.trimIndent()
+        )
     }
 
-    private fun loadSettings(): SettingsData {
-        val settingsFile = File("settings.yml")
-        return if (settingsFile.exists()) {
+    private fun loadSettings() {
+        val settingsFile = File("settings.cfg")
+        if (settingsFile.exists()) {
             readSettings(settingsFile)
         } else {
-            writeNewSettings(settingsFile)
+            askAndWriteNewSettings(settingsFile)
         }
     }
 }
+/*
+groupId: 200012732
+token: "221ae798f0fe70c99946a62fa5e914e97b3ecf94e2d3162c7c673e68fb6bca84c0199fbb690b689760556"
+*/

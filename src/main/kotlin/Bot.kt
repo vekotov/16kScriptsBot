@@ -1,4 +1,13 @@
+import Logger.logMessage
+
 fun main() {
     println("Hello world!")
-    println("" + Settings.data.groupId + " " + Settings.data.token)
+    Longpoll.client.onMessage { messageEvent ->
+        logMessage(messageEvent.message)
+        when (messageEvent.message.text) {
+            "привет" -> Longpoll.sendMessage(messageEvent.message.peerId, "Лежать плюс сосать!")
+        }
+    }
+    Longpoll.client.startLongPolling()
+    println("Longpolling started!")
 }
