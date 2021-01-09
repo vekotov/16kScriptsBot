@@ -37,7 +37,3 @@ object Settings {
         }
     }
 }
-/*
-groupId: 200012732
-token: "221ae798f0fe70c99946a62fa5e914e97b3ecf94e2d3162c7c673e68fb6bca84c0199fbb690b689760556"
-*/
