@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     kotlin("jvm") version "1.4.20"
     id("com.github.johnrengelman.shadow") version "6.1.0"
+    kotlin("plugin.serialization") version "1.4.20"
 }
 
 group = "ru.16k_scripts"

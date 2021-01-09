@@ -17,7 +17,7 @@ fun main() {
 
     Longpoll.client.onMessage { messageEvent ->
         logMessage(messageEvent.message)
-        val user = User("$database:${messageEvent.message.fromId}", commands)
+        val user = User("$database:${messageEvent.message.fromId}", commands, messageEvent.message.fromId)
         when (messageEvent.message.text.split(" ")[0]) {
             "привет" -> {
                 messageEvent.reply("Привет, ${user.nickname}")
@@ -26,8 +26,10 @@ fun main() {
                 if (messageEvent.message.text.split(" ").size >= 2) {
                     user.nickname = messageEvent.message.text.removePrefix("ник ")
                     messageEvent.reply("Установлен ник ${user.nickname}")
-                } else
-                    messageEvent.reply("Введите 'ник <новый ник>'")
+                } else {
+                    user.nickname = ""
+                    messageEvent.reply("Ник удален!")
+                }
             }
         }
     }
